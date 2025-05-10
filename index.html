@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>登录界面</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <script>
+    function setLang(lang) {
+      const text = {
+        zh: {
+          loginTitle: "登录",
+          usernamePlaceholder: "请输入你的用户名",
+          passwordPlaceholder: "请输入你的密码",
+          registerText: "没有账号? 点我注册!",
+          loginBtn: "登录",
+          guestBtn: "以游客身份访问",
+          success: "登录成功！欢迎管理员。",
+          fail: "用户名或密码错误。"
+        },
+        en: {
+          loginTitle: "Login",
+          usernamePlaceholder: "Enter your username",
+          passwordPlaceholder: "Enter your password",
+          registerText: "No account? Click to register!",
+          loginBtn: "Login",
+          guestBtn: "Access as Guest",
+          success: "Login successful! Welcome Admin.",
+          fail: "Incorrect username or password."
+        }
+      };
+      document.getElementById('login-title').innerText = text[lang].loginTitle;
+      document.getElementById('username').placeholder = text[lang].usernamePlaceholder;
+      document.getElementById('password').placeholder = text[lang].passwordPlaceholder;
+      document.getElementById('register-link').innerText = text[lang].registerText;
+      document.getElementById('login-btn').innerText = text[lang].loginBtn;
+      document.getElementById('guest-btn').innerText = text[lang].guestBtn;
+      window._i18n = text[lang];
+    }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: 'Microsoft YaHei', sans-serif;
+      cursor: url('cursor/working.ani'), auto;
+    }
+    body:active {
+      cursor: url('cursor/busy.ani'), auto;
+    }
+    video.bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+    }
+    .login-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: row;
+      width: 700px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    .left-panel {
+      flex: 1;
+      background: url('https://via.placeholder.com/300x400') no-repeat center;
+      background-size: cover;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+    }
+    .right-panel {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .right-panel h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      text-align: center;
+    }
+    .right-panel input {
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .register-link {
+      color: #007BFF;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+    .buttons button {
+      background-color: white;
+      border: 2px solid #333;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 768px) {
+      .login-container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+      }
+      .left-panel {
+        height: 200px;
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 0;
+      }
+      .right-panel {
+        padding: 20px;
+      }
+    }
+  </style>
+
+  <style>
+    .login-container {
+      animation: fadeInScale 1s ease;
+    }
+    @keyframes fadeInScale {
+      from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+    .buttons button:hover {
+      background-color: #eee;
+      transition: 0.3s;
+    }
+    .lang-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+    .lang-switcher button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: none;
+      background: rgba(255,255,255,0.6);
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+
+<body onload="setLang('zh')">
+  <div class="lang-switcher">
+    <button onclick="setLang('zh')">中文</button>
+    <button onclick="setLang('en')">English</button>
+  </div>
+
+  <video autoplay muted loop class="bg-video">
+    <source src="neon_video/Neon Lines.mp4" type="video/mp4">
+  </video>
+
+  <div class="login-container">
+    <div class="left-panel"></div>
+    <div class="right-panel">
+      <h2 id='login-title'>登录</h2>
+      <input type="text" placeholder="请输入你的用户名" id="username">
+      <input type="password" placeholder="请输入你的密码" id="password">
+      <div class="register-link" id="register-link" onclick="window.location.href='register.html'">没有账号? 点我注册!</div>
+      <div class="buttons">
+        <button id="login-btn" onclick="login()">登录</button>
+        <button id="guest-btn" onclick="alert('游客模式进入')">以游客身份访问</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (username === 'Admin' && password === '123456') {
+        alert(window._i18n.success);
+
+        alert('登录成功！欢迎管理员。');
+      
+      } else {
+        alert(window._i18n.fail);
+
+        alert('用户名或密码错误。');
+      }
+    }
+  </script>
+</body>
+</html>
